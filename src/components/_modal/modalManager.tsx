@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { closeModal } from '@/redux/slices/modal'
-import { X } from 'lucide-react'
+// import { closeModal } from '@/redux/slices/modal'
+// import { X } from 'lucide-react'
 
 import Item_modal from './ItemsModal'
 import Party_modal from './PartyModal'
@@ -16,7 +16,7 @@ import Party_modal from './PartyModal'
 // import Expense from './ExpenseModal'
 
 const ModalManager: React.FC = () => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const { activeModal } = useSelector((state: RootState) => state.modal)
 
@@ -35,8 +35,10 @@ const ModalManager: React.FC = () => {
   return (
     <section>
       {activeModal !== null && (
-        <div className=" fixed top-0 left-0 w-full h-full z-40 grid content-center items-center justify-items-center overflow-y-auto py-10 bg-[#00000077] ">
-          <main className="relative  w-fit h-fit bg-white  z-50 ">
+        // fixed top-0 left-0
+        <div className=" 
+         w-full h-full z-40 grid content-center items-center justify-items-center overflow-y-auto p-5  ">
+          <main className="relative  w-full h-full  bg-white  z-50 ">
             {activeModal === 'Items' && <Item_modal />}
             {activeModal === 'Party' && <Party_modal />}
             {/* {activeModal === 'AdjustItems' && <Adjust_item />} */}
@@ -46,12 +48,12 @@ const ModalManager: React.FC = () => {
             {/* {activeModal === 'BankAccountTransaction' && <BankTransaction />} */}
             {/* {activeModal === 'Expense' && <Expense />} */}
 
-            <span
+            {/* <span
               className="absolute top-6 right-4 cursor-pointer h-8 w-8 grid place-items-center rounded-full hover:bg-[#5d49ab2f]"
               onClick={() => dispatch(closeModal())}
             >
               <X />
-            </span>
+            </span> */}
           </main>
         </div>
       )}
