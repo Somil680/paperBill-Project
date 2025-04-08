@@ -31,10 +31,8 @@ const AddItems = (
     // currentItem,
   }
 ) => {
-
-
   const [isUnique, setIsUnique] = useState(true)
-  console.log("🚀 ~ setIsUnique:", setIsUnique)
+  console.log('🚀 ~ setIsUnique:', setIsUnique)
   const [tab, setTab] = useState(0)
   // const navigate = useNavigate()
   // const [primaryUnits, setPrimaryUnits] = useState()
@@ -64,7 +62,7 @@ const AddItems = (
     { name: 'ROLLS' },
     { name: 'SQUARE FEET' },
   ])
-  console.log("🚀 ~ setUpdatedPrimaryUnits:", setUpdatedPrimaryUnits)
+  console.log('🚀 ~ setUpdatedPrimaryUnits:', setUpdatedPrimaryUnits)
 
   const [updatedSecondaryUnits, setUpdatedSecondaryUnits] = useState([
     { name: 'BAGS' },
@@ -86,12 +84,12 @@ const AddItems = (
     { name: 'ROLLS' },
     { name: 'SQUARE FEET' },
   ])
-  console.log("🚀 ~ setUpdatedSecondaryUnits:", setUpdatedSecondaryUnits)
+  console.log('🚀 ~ setUpdatedSecondaryUnits:', setUpdatedSecondaryUnits)
 
   const [addUnitDialogOpen, setAddUnitDialogOpen] = useState(false)
   const [newUnit, setNewUnit] = useState('')
   const [isAddingPrimaryUnit, setIsAddingPrimaryUnit] = useState(true)
-  console.log("🚀 ~ setIsAddingPrimaryUnit:", setIsAddingPrimaryUnit)
+  console.log('🚀 ~ setIsAddingPrimaryUnit:', setIsAddingPrimaryUnit)
   // const [userEmail, setUserEmail] = useState();
 
   // const handleAddNewUnit = async () => {
@@ -179,7 +177,6 @@ const AddItems = (
     location: '',
   })
 
-
   // const handleInputChange = (field, value) => {
   //   setFormData((prev) => ({
   //     ...prev,
@@ -187,41 +184,39 @@ const AddItems = (
   //   }));
   // };
   interface FormData {
-    itemName: string;
-    itemHSN: string;
-    categories: string[];
-    itemCode: string;
+    itemName: string
+    itemHSN: string
+    categories: string[]
+    itemCode: string
     quantity: {
-      primary: string;
-      secondary: string;
-    };
-    conversionRate: string;
-    salePrice: string;
-    primaryUnit: string;
-    secondaryUnit: string;
-    salePriceType: string;
-    saleDiscount: string;
-    saleDiscountType: string;
-    wholesalePrice: string;
-    wholesalePriceType: string;
-    minWholesaleQty: string;
-    purchasePrice: string;
-    purchasePriceType: string;
-    taxRate: string;
-    openingPrimaryQuantity: string;
-    openingSecondaryQuantity: string;
-    atPrice: string;
-    asOfDate: string;
-    minStockToMaintain: string;
-    location: string;
+      primary: string
+      secondary: string
+    }
+    conversionRate: string
+    salePrice: string
+    primaryUnit: string
+    secondaryUnit: string
+    salePriceType: string
+    saleDiscount: string
+    saleDiscountType: string
+    wholesalePrice: string
+    wholesalePriceType: string
+    minWholesaleQty: string
+    purchasePrice: string
+    purchasePriceType: string
+    taxRate: string
+    openingPrimaryQuantity: string
+    openingSecondaryQuantity: string
+    atPrice: string
+    asOfDate: string
+    minStockToMaintain: string
+    location: string
   }
 
-
-
   const handleInputChange = (field: keyof FormData, value: string): void => {
-    console.log('🚀 ~ handleInputChange ~ value:', value);
-    console.log('🚀 ~ handleInputChange ~ field:', field);
-    let newValue: string = value;
+    console.log('🚀 ~ handleInputChange ~ value:', value)
+    console.log('🚀 ~ handleInputChange ~ field:', field)
+    let newValue: string = value
 
     if (
       [
@@ -232,12 +227,12 @@ const AddItems = (
         'atPrice',
       ].includes(field)
     ) {
-      newValue = value.replace(/[^0-9.]/g, ''); // Allow only numbers and a single decimal point
+      newValue = value.replace(/[^0-9.]/g, '') // Allow only numbers and a single decimal point
 
       // Prevent multiple decimal points
-      const dotCount = (newValue.match(/\./g) || []).length;
+      const dotCount = (newValue.match(/\./g) || []).length
       if (dotCount > 1) {
-        newValue = newValue.slice(0, newValue.lastIndexOf('.')); // Remove extra dots
+        newValue = newValue.slice(0, newValue.lastIndexOf('.')) // Remove extra dots
       }
     } else if (
       [
@@ -247,7 +242,7 @@ const AddItems = (
         'minStockToMaintain',
       ].includes(field)
     ) {
-      newValue = value.replace(/\D/g, ''); // Allow only whole numbers (no decimals)
+      newValue = value.replace(/\D/g, '') // Allow only whole numbers (no decimals)
     }
 
     // setFormData((prev: FormData) => ({
@@ -262,7 +257,7 @@ const AddItems = (
     //     [field]: '',
     //   }));
     // }
-  };
+  }
 
   const handleTabChange = (newValue: React.SetStateAction<number>) => {
     setTab(newValue)
@@ -434,8 +429,9 @@ const AddItems = (
 
   const dispatch = useDispatch()
   return (
-    <div className="bg-white p-5 rounded-lg shadow h-[90vh]">
+    <div className="bg-white p-5 rounded-lg shadow h-[90vh] flex flex-col justify-between ">
       {/* TOP HEADING CONTENT */}
+      <div className=''>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           <p className=" font-semibold text-2xl">Add Item</p>
@@ -635,34 +631,31 @@ const AddItems = (
                 />
               </div>
             </div>
-           
-            DIV
-     
-
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <h6 className="text-sm font-semibold mb-2">Purchase Price</h6>
-                <input
-                  className="w-full px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500 mb-2"
-                  placeholder="Purchase Price"
-                  value={formData.purchasePrice}
-                  onChange={(e) =>
-                    handleInputChange('purchasePrice', e.target.value)
-                  }
-                />
-                <select
-                  className="w-full px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
-                  value={formData.purchasePriceType}
-                  onChange={(e) =>
-                    handleInputChange('purchasePriceType', e.target.value)
-                  }
-                >
-                  <option value="Without Tax">Without Tax</option>
-                  <option value="With Tax">With Tax</option>
-                </select>
+            <div className="flex gap-3">
+              <div className="bg-[#f9fafa] p-5 flex flex-col w-full gap-6">
+                <p className="text-sm font-semibold mb-1">Purchase Price</p>
+                <div className="flex">
+                  <FloatingInput
+                    label={'Purchase Price'}
+                    value={formData.salePrice}
+                    onChange={(e) =>
+                      handleInputChange('salePrice', e.target.value)
+                    }
+                  />
+                  <select
+                    className="px-3 py-2 w-[150px] border rounded text-sm focus:outline-none focus:border-blue-500"
+                    value={formData.salePriceType}
+                    onChange={(e) =>
+                      handleInputChange('salePriceType', e.target.value)
+                    }
+                  >
+                    <option value="Without Tax">Without Tax</option>
+                    <option value="With Tax">With Tax</option>
+                  </select>
+                </div>
               </div>
-              <div className="flex-1">
-                <h6 className="text-sm font-semibold mb-2">Taxes</h6>
+              <div className="bg-[#f9fafa] p-5 flex flex-col w-full gap-6">
+                <p className="text-sm font-semibold mb-1">Taxes</p>
                 <select
                   className="w-full px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
                   value={formData.taxRate}
@@ -683,108 +676,22 @@ const AddItems = (
 
         {tab === 1 && (
           <div className="flex flex-col gap-4">
-            {/* First Row */}
-            <div className="flex flex-col gap-1">
-              {/* <label className="text-sm font-semibold">Opening Quantities & Price</label> */}
-              <div className="flex gap-4">
-                <div className="flex flex-col w-1/4">
-                  <label className="text-sm font-semibold mb-1">
-                    Opening Primary Quantity
-                  </label>
-                  <input
-                    className="px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
-                    placeholder="Opening Primary Quantity"
-                    value={formData.openingPrimaryQuantity}
-                    onChange={(e) =>
-                      handleInputChange(
-                        'openingPrimaryQuantity',
-                        e.target.value
-                      )
-                    }
-                  />
-                </div>
-
-                <div className="flex flex-col w-1/4">
-                  <label className="text-sm font-semibold mb-1">
-                    Opening Secondary Quantity
-                  </label>
-                  <input
-                    className="px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
-                    placeholder="Opening Secondary Quantity"
-                    value={formData.openingSecondaryQuantity}
-                    onChange={(e) =>
-                      handleInputChange(
-                        'openingSecondaryQuantity',
-                        e.target.value
-                      )
-                    }
-                  />
-                </div>
-
-                <div className="flex flex-col w-1/4">
-                  <label className="text-sm font-semibold mb-1">At Price</label>
-                  <input
-                    className="px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
-                    placeholder="At Price"
-                    value={formData.atPrice}
-                    onChange={(e) =>
-                      handleInputChange('atPrice', e.target.value)
-                    }
-                  />
-                </div>
-
-                <div className="flex flex-col w-1/4">
-                  <label className="text-sm font-semibold mb-1">
-                    As Of Date
-                  </label>
-                  <input
-                    type="date"
-                    className="px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
-                    value={formData.asOfDate}
-                    onChange={(e) =>
-                      handleInputChange('asOfDate', e.target.value)
-                    }
-                  />
-                </div>
-              </div>
+            <div className="flex gap-4">
+              <FloatingInput label={'Opening Primary Quantity'} />
+              <FloatingInput label={'Opening Secondary Quantity'} />
+              <FloatingInput label={'As of Date'} />
             </div>
-
-            {/* Second Row */}
-            <div className="flex flex-col gap-1">
-              {/* <label className="text-sm font-semibold">Stock & Location Details</label> */}
-              <div className="flex gap-4">
-                <div className="flex flex-col w-1/2">
-                  <label className="text-sm font-semibold mb-1">
-                    Min Stock To Maintain
-                  </label>
-                  <input
-                    className="px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
-                    placeholder="Min Stock To Maintain"
-                    value={formData.minStockToMaintain}
-                    onChange={(e) =>
-                      handleInputChange('minStockToMaintain', e.target.value)
-                    }
-                  />
-                </div>
-
-                <div className="flex flex-col w-1/2">
-                  <label className="text-sm font-semibold mb-1">Location</label>
-                  <input
-                    className="px-3 py-2 border rounded text-sm focus:outline-none focus:border-blue-500"
-                    placeholder="Location"
-                    value={formData.location}
-                    onChange={(e) =>
-                      handleInputChange('location', e.target.value)
-                    }
-                  />
-                </div>
-              </div>
+            <div className="flex gap-4">
+              <FloatingInput label={'Minimum Stock to Maintain'} />
+              <FloatingInput label={'Location'} />
             </div>
           </div>
         )}
       </div>
 
-      <div className="flex justify-end gap-2 mt-4 fixed bottom-[11px] w-[78%]">
+      </div>
+
+      <div className="flex justify-end gap-2  w-full border-t pt-5  ">
         <button
           className="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50"
           // onClick={handleSaveAndNew}
@@ -796,7 +703,7 @@ const AddItems = (
           // onClick={handleSave}
           disabled={!isUnique}
         >
-          Save
+          Sav
         </button>
       </div>
 

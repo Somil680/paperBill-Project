@@ -12,7 +12,7 @@ export interface Item {
   salePrice: number
   salePriceTaxInclusive: boolean
   saleDiscount?: number
-  saleDiscountType?: 'percentage' | 'fixed'
+  saleDiscountType?: 'percentage' | 'amount'
   wholesalePrice?: number
 
   purchasePrice: number
@@ -20,11 +20,11 @@ export interface Item {
 
   // Tax
   taxRate?: number // GST %
-  cess?: number
 
   // Stock (if applicable)
-  trackInventory: boolean
-  openingQuantity?: number
+  // trackInventory: boolean
+  primaryQuantity?: number
+  secondaryQuantity?: number
   openingStockValue?: number
   openingStockDate?: string // ISO string
   lowStockLimit?: number

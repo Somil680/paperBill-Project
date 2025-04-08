@@ -7,9 +7,12 @@ import paymentInReducer from './features/sale/paymentIn.reducer'
 import deliveryChallanReducer from './features/sale/deliveryChallan.reducer'
 import creditNoteReducer from './features/sale/creditNote.reducer'
 import quotation from './features/sale/quotation.reducer'
+import modalReducer from './slices/modal'
 export const makeStore = () => {
   return configureStore({
     reducer: {
+      modal: modalReducer,
+
       item: itemReducer,
       party: partyReducer,
       saleOrder: saleOrderReducer,
