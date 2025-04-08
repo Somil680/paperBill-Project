@@ -320,7 +320,6 @@ const AddItems = (
   //         // Remove all existing duplicates
   //         existingDoc.conversion = existingDoc.conversion.filter(
   //           (c) =>
-  //             !(
   //               c.primaryUnit === primaryUnit &&
   //               c.secondaryUnit === secondaryUnit
   //             )

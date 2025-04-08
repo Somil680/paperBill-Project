@@ -99,7 +99,7 @@ const Items = () => {
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-2">
             <FloatingInput
-              label="Search Products...."
+              label="Search"
               className="w-full"
               removeText={() => setFilterProduct('')}
               type="text"
@@ -109,7 +109,7 @@ const Items = () => {
               }
             />
             <Button onClick={() => open('Items', '')}>
-              <Plus /> Add Item
+              <Plus /> Add Party Group
             </Button>
             {/* <Button onClick={handleCreateItem}>
               <Plus /> Add Item
@@ -118,11 +118,10 @@ const Items = () => {
         </div>
         <div className="overflow-y-auto whitespace-nowrap">
           <Table className="h-full">
-            <TableCaption>A list of your Products.</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Item</TableHead>
-                <TableHead className="text-right">Quantity</TableHead>
+                <TableHead className="w-[100px]">GROUP</TableHead>
+                <TableHead className="text-right">PARTY</TableHead>
                 <TableHead className="text-right w-5"></TableHead>
               </TableRow>
             </TableHeader>
@@ -144,39 +143,19 @@ const Items = () => {
 
         <div className=" bg-white shadow-lg h-1/5 w-full p-3 ">
           <div className="flex justify-between">
-            <p className="text-lg font-semibold">
-              Select Product / Total Product Details
-            </p>
+            <p className="text-md">PARTY GROUP NAME</p>
 
-            <Button>
-              <SlidersVertical />
-              Adjust Item
-            </Button>
+            <Button>Move To This Group</Button>
           </div>
-          <div className="flex justify-between  items-center">
-            <div className="space-y-6">
-              <p className="text-base font-semibold text-gray-400">
-                SALE PRICE: <span className="text-green-600"></span>
-              </p>
-              <p className="text-base font-semibold text-gray-400">
-                PURCHASE PRICE: <span className="text-green-600"></span>
-              </p>
-            </div>
-            <div className="space-y-6">
-              <p className="text-base font-semibold text-gray-400">
-                STOCK QUANTITY: <span className="text-green-600"></span>
-              </p>
-              <p className="text-base font-semibold text-gray-400">
-                STOCK VALUE: <span className="text-green-600"></span>
-              </p>
-            </div>
-          </div>
+          <p className="text-xs font-semibold text-gray-400">
+            Parties: <span className="text-green-600"></span>
+          </p>
         </div>
 
         {/* TABLE INFORMATION---------------------------------------------------------------------------------------------- */}
         <div className=" bg-white shadow-lg p-3 h-full space-y-2">
           <div className="flex justify-between">
-            <p className="text-lg font-semibold">TRANSACTION</p>
+            <p className="text-md font-semibold">TRANSACTION</p>
             <FloatingInput
               label="Search by Name | Type"
               type="text"
@@ -185,22 +164,14 @@ const Items = () => {
               onChange={(e) => setFilterTransaction(e.target.value)}
             />
           </div>
-          <div className=" overflow-y-scroll h-[65dvh]">
+          <div className=" overflow-y-scroll h-[71dvh]">
             <Table>
-              {/* <TableCaption>
-                {transaction.length > 0
-                  ? ' A list of your recent invoices.'
-                  : 'Select Product to see invoices '}
-              </TableCaption> */}
+    
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[20px]">Sl.no</TableHead>
-                  <TableHead className="">Type</TableHead>
-                  <TableHead className="w-24">Invoice no.</TableHead>
-                  <TableHead className="w-24">Date</TableHead>
-                  <TableHead className="w-24">Shade no.</TableHead>
-                  <TableHead className="w-24">Quantity</TableHead>
-                  <TableHead className="text-right w-24">Price/Unit</TableHead>
+                  <TableHead className="w-1/2">PARTY</TableHead>
+                  <TableHead className="w-1/2 text-right border-l">AMOUNT</TableHead>
+                  <TableHead className="text-right w-5 border-l"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

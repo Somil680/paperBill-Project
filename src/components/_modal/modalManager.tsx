@@ -35,10 +35,12 @@ const ModalManager: React.FC = () => {
   return (
     <section>
       {activeModal !== null && (
-        // fixed top-0 left-0
-        <div className=" 
-         w-full h-full z-40 grid content-center items-center justify-items-center overflow-y-auto p-5  ">
-          <main className="relative  w-full h-full  bg-white  z-50 ">
+        //
+        <div
+          className=" 
+         w-full h-full fixed top-0 left-0 z-40 grid content-center items-center justify-items-center overflow-y-auto p-5 bg-black/50 "
+        >
+          <main className="relative   bg-white  z-50 ">
             {activeModal === 'Items' && <Item_modal />}
             {activeModal === 'Party' && <Party_modal />}
             {/* {activeModal === 'AdjustItems' && <Adjust_item />} */}

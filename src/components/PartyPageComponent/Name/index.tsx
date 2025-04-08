@@ -20,15 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-// import { Product } from '@/lib/type'
-// import { formatCurrencyINR, formatDate } from '@/hooks/hook'
 import { AppDispatch } from '@/redux/store'
-import { createNewItem } from '@/redux/features/item/item.reducer'
-// import CategorySubcategorySelect from '@/components/categorySelect'
-// import { queryOptions, useQuery } from '@tanstack/react-query'
-// import { fetchProduct } from '@/lib/productAction'
-// import { fetchInvoiceProductBasedProduct } from '@/lib/invoiceProductAction'
-// import ActionButton from '@/components/ActionButton'
 
 const Items = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -36,19 +28,7 @@ const Items = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const [selectProduct, setSelectProduct] = useState()
-  //   const [inputItem, setItemInput] = useState<Product>({
-  //     id: '',
-  //     name: '',
-  //     hsn: '',
-  //     unit: '',
-  //     category: '',
-  //     sub_category: ''
-  //     opening_quantity: 0,
-  //     purchase_price: 0,
-  //     sale_price: 0,
-  //     taxs: 18,
-  //     location: '',
-  //   })
+
   const [filterProduct, setFilterProduct] = useState('')
   const [filterTransaction, setFilterTransaction] = useState('')
 
@@ -68,30 +48,7 @@ const Items = () => {
       )
     }
   }
-  //  const handleCreateItem = () => {
-  //    const now = new Date().toISOString()
-
-  //    const newItem = {
-  //      id: crypto.randomUUID(), // or leave it blank if backend generates it
-  //      name: 'Sample Product',
-  //      itemType: "Product" as "Product",
-  //      unit: 'pcs',
-  //      salePrice: 100,
-  //      salePriceTaxInclusive: false,
-  //      purchasePrice: 80,
-  //      purchasePriceTaxInclusive: false,
-  //      isActive: true,
-  //      createdAt: now,
-  //      updatedAt: now,
-  //    }
-
-  //    dispatch(createNewItem(newItem))
-  //  }
-    
-    
-  // const [sortOrder, setSortOrder] = useState('asc')
-
-  // Function to filter and sort data
+ 
 
   return (
     <main className="w-full flex gap-3 h-full ">
@@ -108,8 +65,8 @@ const Items = () => {
                 setFilterProduct(e.target.value)
               }
             />
-            <Button onClick={() => open('Items', '')}>
-              <Plus /> Add Item
+            <Button onClick={() => open('Party', '')}>
+              <Plus /> Add Parties
             </Button>
             {/* <Button onClick={handleCreateItem}>
               <Plus /> Add Item
@@ -118,11 +75,10 @@ const Items = () => {
         </div>
         <div className="overflow-y-auto whitespace-nowrap">
           <Table className="h-full">
-            <TableCaption>A list of your Products.</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Item</TableHead>
-                <TableHead className="text-right">Quantity</TableHead>
+                <TableHead className="w-[100px]">PARTY</TableHead>
+                <TableHead className="text-right">AMOUNT</TableHead>
                 <TableHead className="text-right w-5"></TableHead>
               </TableRow>
             </TableHeader>
@@ -144,30 +100,31 @@ const Items = () => {
 
         <div className=" bg-white shadow-lg h-1/5 w-full p-3 ">
           <div className="flex justify-between">
-            <p className="text-lg font-semibold">
-              Select Product / Total Product Details
-            </p>
-
-            <Button>
-              <SlidersVertical />
-              Adjust Item
-            </Button>
+            <p className="text-lg font-semibold">Party Name</p>
           </div>
-          <div className="flex justify-between  items-center">
-            <div className="space-y-6">
-              <p className="text-base font-semibold text-gray-400">
-                SALE PRICE: <span className="text-green-600"></span>
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between items-center ">
+              <p className="text-xs font-semibold text-gray-400">
+                Phone: <span className="text-green-600"></span>
               </p>
-              <p className="text-base font-semibold text-gray-400">
-                PURCHASE PRICE: <span className="text-green-600"></span>
+              <p className="text-xs font-semibold text-gray-400">
+                Address: <span className="text-green-600"></span>
               </p>
             </div>
-            <div className="space-y-6">
-              <p className="text-base font-semibold text-gray-400">
-                STOCK QUANTITY: <span className="text-green-600"></span>
+            <div className="flex justify-between items-center ">
+              <p className="text-xs font-semibold text-gray-400">
+                Email: <span className="text-green-600"></span>
               </p>
-              <p className="text-base font-semibold text-gray-400">
-                STOCK VALUE: <span className="text-green-600"></span>
+              <p className="text-xs font-semibold text-gray-400">
+                GstIn: <span className="text-green-600"></span>
+              </p>
+            </div>
+            <div className="flex justify-between items-center ">
+              <p className="text-xs font-semibold text-gray-400">
+                Credit Limit: <span className="text-green-600"></span>
+              </p>
+              <p className="text-xs font-semibold text-gray-400">
+                Party Status: <span className="text-green-600"></span>
               </p>
             </div>
           </div>
@@ -176,7 +133,7 @@ const Items = () => {
         {/* TABLE INFORMATION---------------------------------------------------------------------------------------------- */}
         <div className=" bg-white shadow-lg p-3 h-full space-y-2">
           <div className="flex justify-between">
-            <p className="text-lg font-semibold">TRANSACTION</p>
+            <p className="text-md font-semibold">TRANSACTION</p>
             <FloatingInput
               label="Search by Name | Type"
               type="text"
@@ -194,13 +151,13 @@ const Items = () => {
               </TableCaption> */}
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[20px]">Sl.no</TableHead>
-                  <TableHead className="">Type</TableHead>
-                  <TableHead className="w-24">Invoice no.</TableHead>
-                  <TableHead className="w-24">Date</TableHead>
-                  <TableHead className="w-24">Shade no.</TableHead>
-                  <TableHead className="w-24">Quantity</TableHead>
-                  <TableHead className="text-right w-24">Price/Unit</TableHead>
+                  <TableHead className="w-5">Sl.no</TableHead>
+                  <TableHead className="border-l">Type</TableHead>
+                  <TableHead className="w-24 border-l">NUMBER</TableHead>
+                  <TableHead className="w-24 border-l">DATE</TableHead>
+                  <TableHead className="w-24 border-l">TOTAL</TableHead>
+                  <TableHead className="w-24 border-l">BALANCE</TableHead>
+                  <TableHead className="w-5 border-l"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
