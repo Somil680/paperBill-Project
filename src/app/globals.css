@@ -112,6 +112,32 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer utilities {
+  .concave-corner::before,
+  .concave-corner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 20px; /* size of curve */
+    height: 20px;
+    background: var(--color-background);
+    z-index: 1;
+  }
+
+  .concave-corner::before {
+    left: 0;
+    border-top-right-radius: 100% 100%;
+  }
+
+  .concave-corner::after {
+    right: 0;
+    border-top-left-radius: 100% 100%;
+  }
+}
+
+
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

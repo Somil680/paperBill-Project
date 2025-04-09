@@ -7,6 +7,10 @@ import paymentInReducer from './features/sale/paymentIn.reducer'
 import deliveryChallanReducer from './features/sale/deliveryChallan.reducer'
 import creditNoteReducer from './features/sale/creditNote.reducer'
 import quotation from './features/sale/quotation.reducer'
+
+// ✅ Import modal reducer
+import modalReducer from './slices/modal' // <-- update path as per your project
+
 export const makeStore = () => {
   return configureStore({
     reducer: {
@@ -17,6 +21,9 @@ export const makeStore = () => {
       deliveryChallan: deliveryChallanReducer,
       creditNote: creditNoteReducer,
       quotation: quotation,
+
+      // Add modal here
+      modal: modalReducer,
     },
   })
 }
