@@ -6,6 +6,8 @@ import {
   GalleryVerticalEnd,
   ReceiptIndianRupee,
   Landmark,
+  Wrench,
+  RefreshCw
 } from 'lucide-react'
 
 import { NavMain } from '@/components/SideBar/nav-main'
@@ -91,11 +93,11 @@ const data = {
       items: [
         {
           title: 'Bank Account',
-          url: '/cash&bank/bank_account',
+          url: '/cash-&-bank/bank-account',
         },
         {
           title: 'Hand in Cash',
-          url: '/cash&bank/cash_in_hand',
+          url: '/cash-&-bank/cash-in-hand',
         },
         {
           title: 'Cheque',
@@ -104,6 +106,40 @@ const data = {
         {
           title: 'Loan',
           url: '',
+        },
+      ],
+    },
+    {
+      title: 'Utilities',
+      url: '',
+      icon: Wrench,
+      items: [
+        {
+          title: 'Import Item',
+          url: '/Utilities/import-item',
+        },
+        {
+          title: 'Export Item',
+          url: '/Utilities/export-item',
+        },
+        {
+          title: 'BarCode Generator',
+          url: '/Utilities/barcode_generator',
+        },
+      ],
+    },
+    {
+      title: 'Sync, Share & Backup',
+      url: '',
+      icon: RefreshCw,
+      items: [
+        {
+          title: 'sync-&-share',
+          url: '/sync-&-share/sync&share',
+        },
+        {
+          title: 'Backup to Drive',
+          url: '/sync-&-share/backup-to-drive',
         },
       ],
     },

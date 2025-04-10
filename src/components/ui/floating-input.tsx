@@ -17,7 +17,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
 }) => {
   return (
     <label
-      className={`relative flex items-center p-1 h-[40px] w-[228px] rounded-md border   focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 ${className}`}
+      className={`relative flex items-center p-1 h-[40px] rounded-md border    focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 ${className}`}
     >
       <input
         type="text"
@@ -26,7 +26,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
         value={value || ''}
         {...props}
       />
-      <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600">
+      <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs text-gray-500 peer-focus:text-blue-600">
         {label}
       </span>
       {/* {value && ( // Show the X icon only when there's a value
