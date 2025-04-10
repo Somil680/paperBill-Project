@@ -4,6 +4,7 @@ import * as React from 'react'
 interface FloatingInputProps extends React.ComponentProps<'input'> {
   label: string
   className?: string
+  inputClassName?: string // Add this prop to pass custom styles to the input
   removeText?: () => void
   value?: string | number | string[] | undefined
 }
@@ -11,7 +12,7 @@ interface FloatingInputProps extends React.ComponentProps<'input'> {
 const FloatingInput: React.FC<FloatingInputProps> = ({
   label,
   className,
-  // removeText,
+  inputClassName, // Destructure the new inputClassName prop
   value,
   ...props
 }) => {
@@ -21,7 +22,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
     >
       <input
         type="text"
-        className="peer border-none bg-transparent w-full px-2 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+        className={`peer border-none bg-transparent w-full px-2 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 ${inputClassName}`}
         placeholder={label}
         value={value || ''}
         {...props}
@@ -29,18 +30,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
       <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600">
         {label}
       </span>
-      {/* {value && ( // Show the X icon only when there's a value
-        <X
-          onClick={removeText}
-          className="text-gray-500 absolute right-3 top-1/2 -translate-y-1/2"
-          size={20}
-        />
-      )} */}
-      {/* <X
-        onClick={removeText}
-        className=" text-gray-500 "
-        size={20}
-      /> */}
+      
     </label>
   )
 }

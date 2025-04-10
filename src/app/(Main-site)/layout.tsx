@@ -9,7 +9,8 @@ import {
 } from '@/components/ui/sidebar'
 import { Plus, X } from 'lucide-react'
 import ModalManager from '@/components/_modal/modalManager'
-import SaleForm from '@/components/sale/SaleForm'
+import SaleForm from '@/components/Saleform/SaleForm'
+import PurchaseForm from '@/components/PurchaseForm/PurchaseForm'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,12 +27,13 @@ import { cn } from '@/lib/utils'
 interface Tab {
   id: string
   label: string
+  type: 'sale' | 'purchase' // New property
   formData: {
     customerName: string
     item: string
     amount: string
   }
-  paymentType: 'cash' | 'credit'
+  paymentType: 'credit' | 'cash'
 }
 
 export default function RootLayout({
@@ -48,6 +50,7 @@ export default function RootLayout({
   const [isCredit, setIsCredit] = useState(false)
 
   const customerList = ['Alice', 'Bob', 'Charlie']
+  const supplierList = ['Supplier A', 'Supplier B', 'Supplier C'] // Define supplier list
 
   const handleCustomerNameUpdate = (tabId: string, name: string) => {
     setTabs((prev) =>
@@ -56,19 +59,36 @@ export default function RootLayout({
           ? { ...tab, formData: { ...tab.formData, customerName: name } }
           : tab
       )
-    );
-  };
-  
-
-
+    )
+  }
 
   const tabContainerRef = useRef<HTMLDivElement>(null)
+
+  const handleAddPurchase = () => {
+    const newTabId = `purchase-${Date.now()}`
+    const newTab: Tab = {
+      id: newTabId,
+      label: `Purchase #${
+        tabs.filter((tab) => tab.type === 'purchase').length + 1
+      }`,
+      type: 'purchase', // Set type to purchase
+      formData: {
+        customerName: '',
+        item: '',
+        amount: '',
+      },
+      paymentType: 'cash', // Default payment type
+    }
+    setTabs((prev) => [...prev, newTab])
+    setActiveTab(newTabId)
+  }
 
   const handleAddSale = () => {
     const newTabId = `sale-${Date.now()}`
     const newTab: Tab = {
       id: newTabId,
-      label: `Sale #${tabs.length + 1}`,
+      label: `Sale #${tabs.filter((tab) => tab.type === 'sale').length + 1}`,
+      type: 'sale', // Set type to sale
       formData: {
         customerName: '',
         item: '',
@@ -95,7 +115,7 @@ export default function RootLayout({
 
   const handleFormChange = (
     id: string,
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> // Allow both input and select events
   ) => {
     setTabs((prev) =>
       prev.map((tab) => {
@@ -104,7 +124,7 @@ export default function RootLayout({
             ...tab,
             formData: {
               ...tab.formData,
-              [e.target.name]: e.target.value,
+              [e.target.name]: e.target.value, // Access the form element's name and value
             },
           }
         }
@@ -206,6 +226,14 @@ export default function RootLayout({
     return () => window.removeEventListener('resize', updateTabWidths)
   }, [tabs])
 
+  useEffect(() => {
+    console.log('Active Tab:', activeTab)
+    console.log(
+      'Active Tab Type:',
+      tabs.find((tab) => tab.id === activeTab)?.type
+    )
+  }, [activeTab, tabs])
+
   const isFullScreen = !!activeTab
 
   return (
@@ -249,7 +277,10 @@ export default function RootLayout({
                     <Plus />
                     Add Sale
                   </button>
-                  <button className="hover:cursor-pointer shadow-lg gap-2 h-[35px] text-lg py-2 px-4 items-center flex justify-center rounded-3xl bg-[#cce6ff] text-[#3f75e8] hover:bg-[#b5d5f3]">
+                  <button
+                    onClick={handleAddPurchase} // Call the new function
+                    className="hover:cursor-pointer shadow-lg gap-2 h-[35px] text-lg py-2 px-4 items-center flex justify-center rounded-3xl bg-[#cce6ff] text-[#3f75e8] hover:bg-[#b5d5f3]"
+                  >
                     <Plus />
                     Add Purchase
                   </button>
@@ -354,16 +385,32 @@ export default function RootLayout({
                           </div>
                         )
                       })}
-                      <button
-                        onClick={handleAddSale}
-                        className="flex items-center justify-center w-10 h-9  text-white flex-shrink-0"
-                        title="Add new tab"
-                      >
-                        <Plus
-                          className="bg-blue-500 rounded-full hover:cursor-pointer text-white"
-                          size={16}
-                        />
-                      </button>
+                      {/* Conditionally Render Add Tab Buttons */}
+                      {!activeTab ||
+                      tabs.find((tab) => tab.id === activeTab)?.type ===
+                        'sale' ? (
+                        <button
+                          onClick={handleAddSale}
+                          className="flex items-center justify-center w-10 h-9 text-white flex-shrink-0"
+                          title="Add Sale Tab"
+                        >
+                          <Plus
+                            className="bg-blue-500 rounded-full hover:cursor-pointer text-white"
+                            size={16}
+                          />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={handleAddPurchase}
+                          className="flex items-center justify-center w-10 h-9 text-white flex-shrink-0"
+                          title="Add Purchase Tab"
+                        >
+                          <Plus
+                            className="bg-green-500 rounded-full hover:cursor-pointer text-white"
+                            size={16}
+                          />
+                        </button>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center h-9 px-2">
@@ -378,75 +425,119 @@ export default function RootLayout({
                 </div>
 
                 {/* Connected Content Strip */}
-                {activeTab && (
-                  <div
-                    className={`flex items-center px-4 py-2 border-l border-r border-b border-gray-300 bg-white space-x-4`}
-                  >
-                    <h3 className="text-lg font-semibold mr-4">Sale</h3>
-                    <div className="w-[1px] h-4 bg-gray-400" />
-                    <div className="flex items-center space-x-2">
-                      <span
-                        className={cn(
-                          'text-xs font-semibold transition-colors',
-                          tabs.find((tab) => tab.id === activeTab)
-                            ?.paymentType === 'credit'
-                            ? 'text-black'
-                            : 'text-blue-600 font-semibold'
-                        )}
-                      >
-                        Credit
-                      </span>
+                {activeTab &&
+                  (tabs.find((tab) => tab.id === activeTab)?.type === 'sale' ? (
+                    <div
+                      className={`flex items-center px-4 py-2 border-l border-r border-b border-gray-300 bg-white space-x-4`}
+                    >
+                      <h3 className="text-lg font-semibold mr-4">Sale</h3>
+                      <div className="w-[1px] h-4 bg-gray-400" />
+                      <div className="flex items-center space-x-2">
+                        <span
+                          className={cn(
+                            'text-xs font-semibold transition-colors',
+                            tabs.find((tab) => tab.id === activeTab)
+                              ?.paymentType === 'credit'
+                              ? 'text-black'
+                              : 'text-blue-600 font-semibold'
+                          )}
+                        >
+                          Credit
+                        </span>
 
-                      <Switch
-                        checked={
-                          tabs.find((tab) => tab.id === activeTab)
-                            ?.paymentType === 'credit'
-                        }
-                        onCheckedChange={() =>
-                          handlePaymentTypeChange(activeTab)
-                        }
-                      />
+                        <Switch
+                          checked={
+                            tabs.find((tab) => tab.id === activeTab)
+                              ?.paymentType === 'credit'
+                          }
+                          onCheckedChange={() =>
+                            handlePaymentTypeChange(activeTab)
+                          }
+                        />
 
-                      <span
-                        className={cn(
-                          'text-xs font-semibold transition-colors',
-                          tabs.find((tab) => tab.id === activeTab)
-                            ?.paymentType === 'credit'
-                            ? 'text-blue-600 font-semibold'
-                            : 'text-black'
-                        )}
-                      >
-                        Cash
-                      </span>
+                        <span
+                          className={cn(
+                            'text-xs font-semibold transition-colors',
+                            tabs.find((tab) => tab.id === activeTab)
+                              ?.paymentType === 'credit'
+                              ? 'text-blue-600 font-semibold'
+                              : 'text-black'
+                          )}
+                        >
+                          Cash
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  ) : (
+                    tabs.find((tab) => tab.id === activeTab)?.type ===
+                      'purchase' && (
+                      <div
+                        className={`flex items-center px-4 py-2 border-l border-r border-b border-gray-300 bg-white space-x-4`}
+                      >
+                        <h3 className="text-lg font-semibold mr-4">Purchase</h3>
+                      </div>
+                    )
+                  ))}
               </div>
             )}
 
             <div className="w-full h-full overflow-auto">
-              {activeTab && (
-                <SaleForm
-                key={activeTab}
-                formId={activeTab} // or tabs.find(...)?.id
-                formData={
-                  tabs.find((tab) => tab.id === activeTab)?.formData || {
-                    customerName: '',
-                    item: '',
-                    amount: '',
-                  }
-                }
-                onChange={(e) => handleFormChange(activeTab, e)}
-                onSubmit={(e) => handleFormSubmit(activeTab, e)}
-                paymentType={
-                  tabs.find((tab) => tab.id === activeTab)?.paymentType || 'cash'
-                }
-                onTogglePaymentType={() => handlePaymentTypeChange(activeTab)}
-                customerList={customerList} // ✅ make sure this exists
-                updateCustomerName={(name) => handleCustomerNameUpdate(activeTab, name)} // ✅ define this
-              />
-              
-              )}
+              {activeTab &&
+                (tabs.find((tab) => tab.id === activeTab)?.type === 'sale' ? (
+                  <SaleForm
+                    key={activeTab}
+                    formId={activeTab}
+                    formData={
+                      tabs.find((tab) => tab.id === activeTab)?.formData || {
+                        customerName: '',
+                        item: '',
+                        amount: '',
+                      }
+                    }
+                    onChange={(e) => handleFormChange(activeTab, e)}
+                    onSubmit={(e) => handleFormSubmit(activeTab, e)}
+                    paymentType={
+                      tabs.find((tab) => tab.id === activeTab)?.paymentType ||
+                      'cash'
+                    }
+                    onTogglePaymentType={() =>
+                      handlePaymentTypeChange(activeTab)
+                    }
+                    customerList={customerList}
+                    updateCustomerName={(name) =>
+                      handleCustomerNameUpdate(activeTab, name)
+                    }
+                  />
+                ) : (
+                  <PurchaseForm
+                    key={activeTab}
+                    formId={activeTab}
+                    formData={
+                      tabs.find((tab) => tab.id === activeTab)?.formData || {
+                        customerName: '',
+                        item: '',
+                        amount: '',
+                      }
+                    }
+                    onChange={(e) => handleFormChange(activeTab, e)}
+                    onSubmit={(e) => handleFormSubmit(activeTab, e)}
+                    paymentType={
+                      tabs.find((tab) => tab.id === activeTab)?.paymentType ||
+                      'cash'
+                    }
+                    onTogglePaymentType={() =>
+                      handlePaymentTypeChange(activeTab)
+                    }
+                    supplierList={supplierList}
+                    customerList={customerList}
+                    updateCustomerName={(name) =>
+                      handleCustomerNameUpdate(activeTab, name)
+                    }
+                    updateSupplierName={(name) =>
+                      handleCustomerNameUpdate(activeTab, name)
+                    }
+                  />
+                ))}
             </div>
           </div>
         </SidebarInset>

@@ -12,6 +12,11 @@ interface SaleFormProps {
     invoiceNumber?: string
     invoiceDate?: string
     stateOfSupply?: string
+    billingName?: string
+    searchName?: string
+    address?: string
+    phone?: string
+
   }
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
   onSubmit: (e: React.FormEvent) => void
@@ -22,12 +27,37 @@ interface SaleFormProps {
 }
 
 const indianStates = [
-  'None', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
-  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand',
-  'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
-  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan',
-  'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh',
-  'Uttarakhand', 'West Bengal', 'Delhi', 'Jammu and Kashmir'
+  'None',
+  'Andhra Pradesh',
+  'Arunachal Pradesh',
+  'Assam',
+  'Bihar',
+  'Chhattisgarh',
+  'Goa',
+  'Gujarat',
+  'Haryana',
+  'Himachal Pradesh',
+  'Jharkhand',
+  'Karnataka',
+  'Kerala',
+  'Madhya Pradesh',
+  'Maharashtra',
+  'Manipur',
+  'Meghalaya',
+  'Mizoram',
+  'Nagaland',
+  'Odisha',
+  'Punjab',
+  'Rajasthan',
+  'Sikkim',
+  'Tamil Nadu',
+  'Telangana',
+  'Tripura',
+  'Uttar Pradesh',
+  'Uttarakhand',
+  'West Bengal',
+  'Delhi',
+  'Jammu and Kashmir',
 ]
 
 const unitOptions = ['pcs', 'kg', 'litre', 'box', 'meter']
@@ -59,13 +89,34 @@ export default function SaleForm({
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   const [items, setItems] = useState<ItemRow[]>([
-    { item: '', qty: '', unit: 'pcs', priceType: 'Without Tax', price: '', taxType: 'None', taxAmount: '', amount: '' },
-    { item: '', qty: '', unit: 'pcs', priceType: 'Without Tax', price: '', taxType: 'None', taxAmount: '', amount: '' },
+    {
+      item: '',
+      qty: '',
+      unit: 'pcs',
+      priceType: 'Without Tax',
+      price: '',
+      taxType: 'None',
+      taxAmount: '',
+      amount: '',
+    },
+    {
+      item: '',
+      qty: '',
+      unit: 'pcs',
+      priceType: 'Without Tax',
+      price: '',
+      taxType: 'None',
+      taxAmount: '',
+      amount: '',
+    },
   ])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false)
       }
     }
@@ -85,7 +136,11 @@ export default function SaleForm({
     setShowDropdown(false)
   }
 
-  const handleItemChange = (index: number, field: keyof ItemRow, value: string) => {
+  const handleItemChange = (
+    index: number,
+    field: keyof ItemRow,
+    value: string
+  ) => {
     const updatedItems = [...items]
     updatedItems[index] = {
       ...updatedItems[index],
@@ -97,7 +152,16 @@ export default function SaleForm({
   const addRow = () => {
     setItems([
       ...items,
-      { item: '', qty: '', unit: 'pcs', priceType: 'Without Tax', price: '', taxType: 'None', taxAmount: '', amount: '' },
+      {
+        item: '',
+        qty: '',
+        unit: 'pcs',
+        priceType: 'Without Tax',
+        price: '',
+        taxType: 'None',
+        taxAmount: '',
+        amount: '',
+      },
     ])
   }
 
@@ -117,28 +181,31 @@ export default function SaleForm({
                   <div className="flex gap-3">
                     <FloatingInput
                       label="Billing Name (Optional)"
-                      name="amount"
-                      type="number"
-                      value={formData.amount}
+                      name="billingName"
+                      type="text"
+                      value={formData.billingName}
                       onChange={onChange}
                       className="w-[150px] border-gray-400"
+                      inputClassName="text-gray-600"
                     />
                     <FloatingInput
                       label="Phone No."
-                      name="amount"
+                      name="phone"
                       type="number"
-                      value={formData.amount}
+                      value={formData.phone || ''}
                       onChange={onChange}
                       className="w-[150px] border-gray-400"
+                      inputClassName="text-gray-600"
                     />
                   </div>
                   <FloatingInput
                     label="Billing Address"
-                    name="amount"
-                    type="number"
-                    value={formData.amount}
+                    name="address"
+                    type="text"
+                    value={formData.address || ''}
                     onChange={onChange}
-                    className="w-[200px] h-[100px] border-gray-400"
+                    className="w-[200px] h-[70px] border-gray-400"
+                    inputClassName="text-gray-600"
                   />
                 </>
               )}
@@ -147,31 +214,36 @@ export default function SaleForm({
                 <>
                   <FloatingInput
                     label="Search By Name/Phone*"
-                    name="amount"
-                    type="number"
-                    value={formData.amount}
+                    name="searchName"
+                    type="text"
+                    value={formData.searchName }
                     onChange={onChange}
                     className="w-[250px]  border-gray-400 "
+                    inputClassName="text-gray-600"
                   />
                   <FloatingInput
                     label="Phone No."
                     name="creditDetails"
-                    type="text"
+                    type="number"
                     value={formData.creditDetails || ''}
                     onChange={onChange}
                     className="w-[250px]  border-gray-400"
+                    inputClassName="text-gray-600"
                   />
                 </>
               )}
             </div>
 
-            <div className="flex flex-col gap-6 w-1/2 items-center">
+            {/* right column */}
+
+            <div className="flex flex-col  gap-3 w-1/2 items-center">
               <FloatingInput
                 label="Invoice Number"
                 name="invoiceNumber"
                 value={formData.invoiceNumber || ''}
                 onChange={onChange}
                 className="w-[200px] border-gray-400"
+                inputClassName="text-gray-500"
               />
               <FloatingInput
                 label="Invoice Date"
@@ -180,15 +252,20 @@ export default function SaleForm({
                 value={formData.invoiceDate || ''}
                 onChange={onChange}
                 className="w-[200px] border-gray-400"
+                inputClassName="text-gray-400"
               />
 
+              
+
               <div className="relative w-[230px]" ref={dropdownRef}>
-                <label className="text-sm mb-1 text-gray-500">State of Supply</label>
+                <label className="text-xs mb-1 font-semibold text-gray-400">
+                  State of Supply
+                </label>
                 <div
                   className="border p-2 rounded-md cursor-pointer border-gray-400 bg-white text-gray-500 flex justify-between items-center"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  <span>{formData.stateOfSupply || 'Select'}</span>
+                  <span className='text-gray-400'>{formData.stateOfSupply || 'Select'}</span>
                   <span className="ml-2">&#x25BC;</span>
                 </div>
                 {showDropdown && (
@@ -197,7 +274,7 @@ export default function SaleForm({
                       <div
                         key={state}
                         onClick={() => handleStateSelect(state)}
-                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                        className="p-2 hover:bg-blue-100 cursor-pointer"
                       >
                         {state}
                       </div>
@@ -244,7 +321,9 @@ export default function SaleForm({
                         type="text"
                         className="w-full p-1 border rounded"
                         value={row.item}
-                        onChange={(e) => handleItemChange(index, 'item', e.target.value)}
+                        onChange={(e) =>
+                          handleItemChange(index, 'item', e.target.value)
+                        }
                       />
                     </td>
                     <td className="border p-2">
@@ -252,14 +331,18 @@ export default function SaleForm({
                         type="number"
                         className="w-full p-1 border rounded"
                         value={row.qty}
-                        onChange={(e) => handleItemChange(index, 'qty', e.target.value)}
+                        onChange={(e) =>
+                          handleItemChange(index, 'qty', e.target.value)
+                        }
                       />
                     </td>
                     <td className="border p-2">
                       <select
                         className="w-full p-1 border rounded"
                         value={row.unit}
-                        onChange={(e) => handleItemChange(index, 'unit', e.target.value)}
+                        onChange={(e) =>
+                          handleItemChange(index, 'unit', e.target.value)
+                        }
                       >
                         {unitOptions.map((unit) => (
                           <option key={unit} value={unit}>
@@ -273,14 +356,18 @@ export default function SaleForm({
                         type="number"
                         className="w-full p-1 border rounded"
                         value={row.price}
-                        onChange={(e) => handleItemChange(index, 'price', e.target.value)}
+                        onChange={(e) =>
+                          handleItemChange(index, 'price', e.target.value)
+                        }
                       />
                     </td>
                     <td className="border p-2">
                       <select
                         className="w-full p-1 border rounded"
                         value={row.priceType}
-                        onChange={(e) => handleItemChange(index, 'priceType', e.target.value)}
+                        onChange={(e) =>
+                          handleItemChange(index, 'priceType', e.target.value)
+                        }
                       >
                         {priceTypes.map((type) => (
                           <option key={type} value={type}>
@@ -294,7 +381,9 @@ export default function SaleForm({
                         <select
                           className="w-1/2 p-1 border rounded"
                           value={row.taxType}
-                          onChange={(e) => handleItemChange(index, 'taxType', e.target.value)}
+                          onChange={(e) =>
+                            handleItemChange(index, 'taxType', e.target.value)
+                          }
                         >
                           {taxTypes.map((type) => (
                             <option key={type} value={type}>
@@ -306,7 +395,9 @@ export default function SaleForm({
                           type="number"
                           className="w-1/2 p-1 border rounded"
                           value={row.taxAmount}
-                          onChange={(e) => handleItemChange(index, 'taxAmount', e.target.value)}
+                          onChange={(e) =>
+                            handleItemChange(index, 'taxAmount', e.target.value)
+                          }
                         />
                       </div>
                     </td>
@@ -315,7 +406,9 @@ export default function SaleForm({
                         type="number"
                         className="w-full p-1 border rounded"
                         value={row.amount}
-                        onChange={(e) => handleItemChange(index, 'amount', e.target.value)}
+                        onChange={(e) =>
+                          handleItemChange(index, 'amount', e.target.value)
+                        }
                       />
                     </td>
                   </tr>
@@ -333,10 +426,7 @@ export default function SaleForm({
               </button>
             </div>
           </div>
-
-          
         </form>
-        
       </div>
     </div>
   )

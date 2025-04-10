@@ -53,7 +53,7 @@ const data = {
       items: [
         {
           title: 'Sale Invoices',
-          url: '/sale/sale_bill',
+          url: '/sale/saleInvoice',
         },
         {
           title: 'Estimate/ Quotation',
