@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import FloatingInput from '../ui/floating-input'
 import { FaTrashAlt } from 'react-icons/fa'
+import Table, { ItemRow } from '../ItemTable'
+import ItemTable from '../ItemTable'
 
 interface SaleFormProps {
   formId: string
@@ -16,7 +18,6 @@ interface SaleFormProps {
     searchName?: string
     address?: string
     phone?: string
-
   }
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
   onSubmit: (e: React.FormEvent) => void
@@ -64,16 +65,16 @@ const unitOptions = ['pcs', 'kg', 'litre', 'box', 'meter']
 const priceTypes = ['Without Tax', 'With Tax']
 const taxTypes = ['None', 'GST', 'SGST']
 
-interface ItemRow {
-  item: string
-  qty: string
-  unit: string
-  priceType: string
-  price: string
-  taxType: string
-  taxAmount: string
-  amount: string
-}
+// interface ItemRow {
+//   item: string
+//   qty: string
+//   unit: string
+//   priceType: string
+//   price: string
+//   taxType: string
+//   taxAmount: string
+//   amount: string
+// }
 
 export default function SaleForm({
   formId,
@@ -92,7 +93,7 @@ export default function SaleForm({
     {
       item: '',
       qty: '',
-      unit: 'pcs',
+      unit: 'None',
       priceType: 'Without Tax',
       price: '',
       taxType: 'None',
@@ -102,7 +103,7 @@ export default function SaleForm({
     {
       item: '',
       qty: '',
-      unit: 'pcs',
+      unit: 'None',
       priceType: 'Without Tax',
       price: '',
       taxType: 'None',
@@ -216,7 +217,7 @@ export default function SaleForm({
                     label="Search By Name/Phone*"
                     name="searchName"
                     type="text"
-                    value={formData.searchName }
+                    value={formData.searchName}
                     onChange={onChange}
                     className="w-[250px]  border-gray-400 "
                     inputClassName="text-gray-600"
@@ -255,8 +256,6 @@ export default function SaleForm({
                 inputClassName="text-gray-400"
               />
 
-              
-
               <div className="relative w-[230px]" ref={dropdownRef}>
                 <label className="text-xs mb-1 font-semibold text-gray-400">
                   State of Supply
@@ -265,7 +264,9 @@ export default function SaleForm({
                   className="border p-2 rounded-md cursor-pointer border-gray-400 bg-white text-gray-500 flex justify-between items-center"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  <span className='text-gray-400'>{formData.stateOfSupply || 'Select'}</span>
+                  <span className="text-gray-400">
+                    {formData.stateOfSupply || 'Select'}
+                  </span>
                   <span className="ml-2">&#x25BC;</span>
                 </div>
                 {showDropdown && (
@@ -286,7 +287,7 @@ export default function SaleForm({
           </div>
 
           {/* Table */}
-          <div className="mt-10">
+          {/* <div className="mt-10">
             <table className="w-full border border-gray-300 text-gray-700 text-sm">
               <thead className="bg-gray-100">
                 <tr>
@@ -425,6 +426,16 @@ export default function SaleForm({
                 + Add Row
               </button>
             </div>
+          </div> */}
+
+          <div className='overflow-x-auto'>
+
+          <ItemTable
+            items={items}
+            onItemChange={handleItemChange}
+            onAddRow={addRow}
+            onDeleteRow={deleteRow}
+          />
           </div>
         </form>
       </div>
